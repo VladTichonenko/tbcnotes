@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример загрузчика</title>
+    <style>
+      body {
+        
+        font-family: 'Bauhaus 93', sans-serif; /* Шрифт */
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        height: 1500px; /* Достаточная высота для скролла */
+        background: linear-gradient(to bottom, #5c5c5c, #313131);
+        color: #ffffff;
+    }
+    #preloader {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: #121212 url('') no-repeat center center;
+        z-index: 999;
+    }
+    .fixed-content { /* Новый стиль для фиксированного блока */
+        position: fixed; /* Фиксированное позиционирование */
+        top: 50%; /* Центрирование по вертикали */
+        left: 50%; /* Центрирование по горизонтали */
+        transform: translate(-50%, -50%); /* Центрируем элемент */
+        text-align: center; /* Центрирование текста */
+      }
+      .text {
+        font-size: 48px; /* Размер шрифта */
+        color: #ffffff; /* Цвет текста */
+        margin: 20px 0; /* Отступы сверху и снизу */
+      }
+      .button-container {
+        display: flex;
+        flex-direction: column; /* Вертикальное расположение кнопок */
+        align-items: center; /* Выравнивание по центру */
+        margin-top: 20px; /* Отступ сверху для кнопок */
+      }
+    #content {
+        
+        display: none;
+        text-align: center;
+        margin-top: 20%;
+    }
+    .button-task {
+        background-color: #6200ea; /* Фиолетовый */
+    }
+    .button-task:hover {
+        background-color: #3700b3; /* Темно-фиолетовый при наведении */
+    }
+    .button-kanban {
+        background-color: #03dac5; /* Бирюзовый */
+    }
+    .button-kanban:hover {
+        background-color: #018786; /* Темно-бирюзовый при наведении */
+    }
+    .button-faq {
+        background-color: #ff5722; /* Оранжевый */
+    }
+    .button-faq:hover {
+        background-color: #e64a19; /* Темно-оранжевый при наведении */
+    }
+    .button-feedback {
+        background-color: #ff9800; /* Оранжевый для кнопки обратной связи */
+    }
+    .button-feedback:hover {
+        background-color: #fb8c00; /* Темно-оранжевый при наведении */
+    }
+    .button-party {
+        
+        background-color: #d5527e; /* Фиолетовый */
+    }
+    .button-party:hover {
+        background-color: #723027; /* Темно-оранжевый при наведении */
+    }
+    button {
+        width: 200px; 
+        color: #ffffff;
+        border: none;
+        padding: 15px 20px; /* Изменённый отступ для удобного клика */
+        border-radius: 50px;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 5px; /* Отступ между кнопками */
+      }
+   
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        opacity: 0.7;
+        pointer-events: none;
+        animation: fall linear forwards;
+    }
+    @keyframes fall {
+        0% {
+            transform: translateY(-100vh);
+        }
+        100% {
+            transform: translateY(100vh);
+        }
+    }
+    
+    .calendar {
+        background-color: #d9e476ed; 
+        padding: 15px; /* Увеличенный отступ для кнопки календаря */
+        border-radius: 20px; /* Скругленные углы для кнопки календаря */
+    }
+    .calendar:hover {
+        background-color: #c9cb25; 
+    }
+    
+    /* Медиазапросы для мобильных устройств */
+    @media only screen and (max-width: 600px) {
+        button {
+            flex: 0 0 48%; /* Устанавливает ширину кнопок около 48% для 2 кнопок в ряду */
+            box-sizing: border-box; /* Для корректного расчета ширины */
+        }
+    }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Bauhaus+93" rel="stylesheet">
+</head>
+<body>
+    <div id="preloader"></div>
+    <div class="fixed-content">
+    <div class="text">TBC NOTES</div>
+    <div class="button-container">
+            <button class="button-task" onclick="window.location.href='задача.html'">My To-Do List</button>
+            <button class="button-kanban" onclick="window.location.href='заметки.html'">Kanban board</button>
+            <button class="button-party" onclick="window.location.href='чемзаняться.html'">Leisure ideas</button>
+            <button class="button-feedback" onclick="sendEmail()">Write to us</button>
+            <button class="calendar" onclick="window.location.href='kalendar.html'">💡</button>
+            <button class="button-faq" onclick="window.location.href='частозадаваемые вопросы.html'">FAQ</button>
+            <button id="confettiButton">🎉</button>
+        </div>
+        
+    </div>
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('preloader').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            }, 5000);
+        };
+
+        function sendEmail() {
+            const email = "tbcworld006@gmail.com"; // Адрес электронной почты
+            const subject = "Обратная связь"; // Тема письма
+            const body = "Здравствуйте,\n\nВаше сообщение здесь..."; // Основной текст письма
+            
+            // Открываем Gmail с заполненным шаблоном письма
+            window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+
+        const button = document.getElementById('confettiButton');
+
+        button.addEventListener('click', () => {
+            for (let i = 0; i < 100; i++) {
+                createConfetti();
+            }
+        });
+
+        function createConfetti() {
+            const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple'];
+            const confetti = document.createElement('div');
+            const size = Math.random() * 10 + 5; // размер конфетти
+
+            confetti.classList.add('confetti');
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = `${size}px`;
+            confetti.style.height = `${size}px`;
+            confetti.style.left = `${Math.random() * window.innerWidth}px`;
+            confetti.style.animationDuration = `${Math.random() * 2 + 1}s`; // случайная продолжительность анимации
+
+            document.body.appendChild(confetti);
+
+            // Удаляем конфетти из DOM после завершения анимации
+            confetti.addEventListener('animationend', () => {
+                confetti.remove();
+            });
+        }
+    </script>
